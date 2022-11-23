@@ -241,7 +241,7 @@ export default {
         if (data.type === 'drag:end') {
           let {dragGroup, dragNode} = data;
 
-          if (dragGroup !== null) {
+          if (dragGroup !== null && Array.isArray(this.groups)) {
             let groupIndex = this.groups.findIndex((item) => {
               return item.id === dragGroup.id;
             })

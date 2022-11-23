@@ -1,13 +1,28 @@
 <template>
   <div>
     <div class="control">
-      <el-button @click="addNode">添加节点(node)</el-button>
-      <el-button @click="addGroup">添加组(group)</el-button>
-      <el-button @click="updateGroup">修改组(group)</el-button>
-      <el-button @click="redraw">重绘</el-button>
-      <el-button @click="logData">log数据</el-button>
-      <el-button @click="addEdge" :disabled="addEdgeEnable">添加连线1-4</el-button>
-      <el-button @click="editEdge">修改连线1-2到1-4左</el-button>
+      <el-row>
+        节点：
+        <el-button @click="addNode">添加节点(node)</el-button>
+        <el-button @click="moveNode">移动节点4</el-button>
+      </el-row>
+      <el-row>
+        线：
+        <el-button @click="addEdge" :disabled="addEdgeEnable">添加连线1-4</el-button>
+        <el-button @click="editEdge">修改连线1-2到1-4左</el-button>
+      </el-row>
+      <el-row>
+        节点组：
+        <el-button @click="addGroup">添加组(group)</el-button>
+        <el-button @click="updateGroup">修改组(group)</el-button>
+      </el-row>
+      <el-row>
+        其他：
+        <el-button @click="redraw">重绘</el-button>
+        <el-button @click="logData">log数据</el-button>
+      </el-row>
+
+
     </div>
     <el-divider></el-divider>
     <butterfly-vue
@@ -84,6 +99,28 @@ export default {
         endpoints: endpoints,
       });
       this.nodeIndex++;
+    },
+    moveNode() {
+      const endpoints = [
+        {
+          id: 'right',
+          orientation: [1, 0],
+          pos: [0, 0.5]
+        },
+        {
+          id: 'left',
+          orientation: [-1, 0],
+          pos: [0, 0.5]
+        }
+      ];
+      this.mockData.nodes.splice(3, 1, {
+        id: '4',
+        top: 350,
+        left: 450,
+        endpoints: endpoints,
+        render: `<el-button type="primary">节点4</el-button>`
+      });
+      
     },
     addGroup() {
       this.mockData.groups.push({
@@ -176,5 +213,8 @@ export default {
 <style scope>
   .control {
     padding-left: 10px;
+  }
+  .el-row {
+    margin-bottom: 10px;
   }
 </style>

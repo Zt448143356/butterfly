@@ -45,14 +45,14 @@ export default {
     {
       id: '1',
       group: '1',
-      top: 40,
+      top: 240,
       left: 20,
       endpoints: endpoints,
     },
     {
       id: '2',
       group: '2',
-      top: 40,
+      top: 240,
       left: 20,
       endpoints: endpoints,
       render: baseNode
@@ -60,14 +60,14 @@ export default {
     {
       id: '3',
       group: '3',
-      top: 40,
+      top: 240,
       left: 50,
       endpoints: endpoints,
       render: `<div>测试节点3</div>`
     },
     {
       id: '4',
-      top: 200,
+      top: 400,
       left: 390,
       endpoints: endpoints,
       render: `<el-button type="primary">节点4</el-button>`

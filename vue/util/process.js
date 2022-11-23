@@ -51,10 +51,10 @@ const processNodes = (canvas, nodes, oldNodes, parent) => {
     if(canvas.layout && canvas.previousIsFlatNode) {
       nodes = canvas._handleTreeNodes(nodes || [], _.get({}, 'isFlatNode', false))
     }
-    relayout(canvas, nodes);
   }
+  relayout(canvas, nodes);
 
- const { created, deleted } = diff(nodes, oldNodes);
+ const { created, deleted, updated} = diff(nodes, oldNodes);
 
   canvas.removeNodes(deleted.map(e => e.id), true);
 
@@ -65,7 +65,7 @@ const processNodes = (canvas, nodes, oldNodes, parent) => {
 };
 
 const processEdge = (canvas, edges, oldEdges, parent) => {
-  const { created, deleted } = diff(edges, oldEdges);
+  const { created, deleted, updated } = diff(edges, oldEdges);
 
   canvas.removeEdges(deleted.map(e => e.id), true);
 
@@ -75,7 +75,7 @@ const processEdge = (canvas, edges, oldEdges, parent) => {
 };
 
 const processGroups = (canvas, groups, oldGroups, parent) => {
-  const {created, deleted} = diff(groups, oldGroups);
+  const {created, deleted, updated} = diff(groups, oldGroups);
 
   process({groups: deleted}).groups.forEach(group => {
     canvas.removeGroup(group.id);
