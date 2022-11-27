@@ -8,9 +8,9 @@ import VueNode from '../coms/vue-node.vue';
  * 渲染render
  * @param {Object} item 渲染对象（就是mockdata中的每一项）
  * @param {String} type 渲染类型
- * @param {Array} canvasNodes 渲染节点对应的渲染类型
+ * @param {Array} canvasDatas 渲染节点对应的渲染类型
  */
-const render = (item, type, parent = null, canvasNodes = null) => {
+const render = (item, type, parent = null, canvasDatas = null) => {
 
   let vueCon;
 
@@ -50,24 +50,25 @@ const render = (item, type, parent = null, canvasNodes = null) => {
     }
     
   }
+  
+  let canvasDataIndex = canvasDatas.findIndex((canvasItem)=>{
+    return canvasItem.id === item.id;
+  })
+
+  if (canvasDataIndex === -1) {
+    console.warn(`canvas.add${type}方法出错`);
+    return null;
+  }
+
+  const canvasData = canvasDatas[canvasDataIndex];
 
   let propsData = {
     itemData: item,
+    canvasData
   }
 
   if (type === 'node') {
-    let canvasNodeIndex = canvasNodes.findIndex((node)=>{
-      return node.id === item.id;
-    })
-  
-    if (canvasNodeIndex === -1) {
-      console.warn(`canvas.addNodes方法出错`);
-      return null;
-    }
-  
-    let canvasNode = canvasNodes[canvasNodeIndex];
-
-    propsData.canvasNode = canvasNode;
+    propsData.canvasNode = canvasData;
   
     const nodeCon = new vueCon({
       parent: parent,
@@ -83,8 +84,7 @@ const render = (item, type, parent = null, canvasNodes = null) => {
     nodeCon.$mount();
     
     return nodeCon;
-  }
-  else {
+  } else {
     const Con = new vueCon({
       propsData
     })
@@ -99,12 +99,7 @@ const render = (item, type, parent = null, canvasNodes = null) => {
 
 };
 
-const addCom = (proData) => {
-  addGroupsCom(proData.groups);
-  addNodesCom(proData.nodes);
-};
-
-const addGroupsCom = (canvasRoot, groups, parent) => {
+const addGroupsCom = (canvasRoot, canvasGroups, groups, parent) => {
   groups.map((item,index) => {
     const id = item.id;
     if (!id) {
@@ -118,10 +113,9 @@ const addGroupsCom = (canvasRoot, groups, parent) => {
       return;
     }
 
-    let groupCon = render(item, 'group', parent);
+    let groupCon = render(item, 'group', parent, canvasGroups);
 
     dom.append(groupCon.$el);
-
   });
 };
 
@@ -145,20 +139,10 @@ const addNodesCom = (canvasRoot, canvasNodes, nodes, parent) => {
     let nodeCon = render(item, 'node', parent, canvasNodes);
 
     dom.append(nodeCon.$el);
-
-    // 需要先挂载锚点才可以添加锚点
-    let canvasNodeIndex = canvasNodes.findIndex((node)=>{
-      return node.id === item.id;
-    })
-  
-    if (canvasNodeIndex === -1) {
-      console.warn(`canvas.addNodes方法出错`);
-      return null;
-    }
   })
 };
 
-const addEdgesCom = (canvasRoot, edges, parent) => {
+const addEdgesCom = (canvasRoot, canvasEdges, edges, parent) => {
   edges.map((item,index) => {
     const id = item.id;
     if (!id) {
@@ -173,7 +157,7 @@ const addEdgesCom = (canvasRoot, edges, parent) => {
         return;
       }
 
-      let edgeCon = render(item, 'edge', parent);
+      let edgeCon = render(item, 'edge', parent, canvasEdges);
 
       dom.append(edgeCon.$el);
     }
@@ -181,7 +165,6 @@ const addEdgesCom = (canvasRoot, edges, parent) => {
 };
 
 export {
-  addCom,
   addEdgesCom,
   addGroupsCom,
   addNodesCom

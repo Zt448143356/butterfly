@@ -15,9 +15,12 @@ export default {
     itemData: {
       type: Object,
     },
-    canvasNode: {
+    canvasNode: {// 兼容历史版本。2.0.0移除
       type: Object
-    }
+    },
+    canvasData: {// 推荐使用这个参数
+      type: Object
+    },
   },
   methods: {
     click(e) {
@@ -27,7 +30,9 @@ export default {
   },
   created() {
     // console.log(this.itemData);
-    // console.log(this.canvasNode);
+    // console.log('Node -> canvasData === canvasNode', this.canvasData === this.canvasNode)
+    // console.log('Node -> canvasData', this.canvasData);
+    // console.log('Node -> canvasNode', this.canvasNode);
   }
 };
 </script>

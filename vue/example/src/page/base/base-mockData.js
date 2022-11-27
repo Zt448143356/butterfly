@@ -60,8 +60,8 @@ export default {
     {
       id: '3',
       group: '3',
-      top: 240,
-      left: 50,
+      top: 70,
+      left: 20,
       endpoints: endpoints,
       render: `<div>测试节点3</div>`
     },

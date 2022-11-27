@@ -71,7 +71,7 @@ const processEdge = (canvas, edges, oldEdges, parent) => {
 
   canvas.addEdges(process({edges: created}).edges, true);
   
-  addEdgesCom(canvas.root, {edges: created}.edges, parent);
+  addEdgesCom(canvas.root, canvas.getDataMap().edges, {edges: created}.edges, parent);
 };
 
 const processGroups = (canvas, groups, oldGroups, parent) => {
@@ -85,7 +85,7 @@ const processGroups = (canvas, groups, oldGroups, parent) => {
     canvas.addGroup(group);
   });
 
-  addGroupsCom(canvas.root, {groups: created}.groups, parent);
+  addGroupsCom(canvas.root, canvas.getDataMap().groups, {groups: created}.groups, parent);
 };
 
 export {

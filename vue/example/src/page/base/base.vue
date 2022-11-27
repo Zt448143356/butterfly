@@ -42,6 +42,7 @@
 <script>
 import _ from 'lodash';
 import {ButterflyVue} from '../../../../index.js';
+// import {ButterflyVue} from 'butterfly-vue';
 
 import mockData from "./base-mockData.js";
 

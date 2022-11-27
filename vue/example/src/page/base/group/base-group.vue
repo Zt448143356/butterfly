@@ -1,10 +1,12 @@
 <template>
   <div @click="click">
-    <div class="base-group">
+    <div class="base-group" :style="groupStyle">
       <div class="base-group-header">
         {{itemData.userData.name}}
       </div>
-      <div class="base-group-content"></div> 
+      <div class="base-group-content">
+        <el-button @click="editData">修改group大小</el-button>
+      </div> 
     </div>
   </div>
 </template>
@@ -16,14 +18,29 @@ export default {
     itemData: {
       type: Object,
     },
+    canvasData: {
+      type: Object
+    },
+  },
+  data: () => {
+    return {
+      groupStyle: {
+        width: '150px',
+        height: '150px',
+      }
+    }
   },
   methods: {
     click() {
       console.log('group click');
     },
+    editData() {
+      this.groupStyle.height = '300px';
+      this.canvasData.height = 300;
+    }
   },
   created() {
-    // console.log(this.nodeData);
+    // console.log('Group -> canvasData', this.canvasData);
   }
 };
 </script>
@@ -31,7 +48,6 @@ export default {
 <style scoped>
   .base-group {
     border-radius: 5px;
-    min-width: 250px;
     box-shadow: 3px 4px 16px #888888;
   }
 

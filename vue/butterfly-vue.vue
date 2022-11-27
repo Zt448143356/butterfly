@@ -264,6 +264,32 @@ export default {
           }
 
         }
+        // 节点移出group
+        if (data.type === 'system.group.removeMembers') {
+          let {nodes = []} = data;
+          for (let node of nodes) {
+            let nodeIndex = this.nodes.findIndex((item) => {
+              return item.id === node.id;
+            })
+            if (nodeIndex !== -1) {
+              this.nodes[nodeIndex].group = undefined;
+            }
+          }
+          this.canvasData.nodes = this.nodes;
+        }
+        // 节点移入group
+        if (data.type === 'system.group.addMembers') {
+          let {nodes = []} = data;
+          for (let node of nodes) {
+            let nodeIndex = this.nodes.findIndex((item) => {
+              return item.id === node.id;
+            })
+            if (nodeIndex !== -1) {
+              this.nodes[nodeIndex].group = node.group;
+            }
+          }
+          this.canvasData.nodes = this.nodes;
+        }
         this.onOtherEvent(data);
       }
     });
